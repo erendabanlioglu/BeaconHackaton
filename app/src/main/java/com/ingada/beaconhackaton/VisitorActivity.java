@@ -47,6 +47,7 @@ public class VisitorActivity extends ActionBarActivity {
     private BeaconDevice currentBeacon ;
     private ListView listview;
     private ArrayList<Company> CompanyList;
+    private ArrayList<JobOffer> currentJobOffers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +63,23 @@ public class VisitorActivity extends ActionBarActivity {
 
         //Creation of all JobOffers
 
-        ArrayList<JobOffer> arraylist = new ArrayList<>();
-                arraylist.add(new JobOffer("Name", "Poet", "POET"));
+        final ArrayList<JobOffer> arraylist = new ArrayList<>();
+                arraylist.add(new JobOffer("Kontakt", "Poet", "POET"));
                 arraylist.add(new JobOffer("DifferentName", "it", "IT"));
                 arraylist.add(new JobOffer("OneMore", "it", "IT"));
                 arraylist.add(new JobOffer("Name", "Poet", "POET"));
 
         ArrayList<JobOffer> arraylist2 = new ArrayList<>();
-            arraylist.add(new JobOffer("Name", "Poet", "POET"));
-            arraylist.add(new JobOffer("DifferentName", "it", "IT"));
-            arraylist.add(new JobOffer("OneMore", "it", "IT"));
-            arraylist.add(new JobOffer("Name", "Poet", "POET"));
+            arraylist2.add(new JobOffer("Hub", "Poet", "POET"));
+            arraylist2.add(new JobOffer("DifferentName", "it", "IT"));
+            arraylist2.add(new JobOffer("OneMore", "it", "IT"));
+            arraylist2.add(new JobOffer("Name", "Poet", "POET"));
 
         ArrayList<JobOffer> arraylist3 = new ArrayList<>();
-            arraylist.add(new JobOffer("Name", "Poet", "POET"));
-            arraylist.add(new JobOffer("DifferentName", "it", "IT"));
-            arraylist.add(new JobOffer("OneMore", "it", "IT"));
-        arraylist.add(new JobOffer("Name", "Poet", "POET"));
+            arraylist3.add(new JobOffer("Google", "Poet", "POET"));
+            arraylist3.add(new JobOffer("DifferentName", "it", "IT"));
+            arraylist3.add(new JobOffer("OneMore", "it", "IT"));
+            arraylist3.add(new JobOffer("Name", "Poet", "POET"));
 
         final Company KontaktIO = new Company("9vVd","Kontakt.io", arraylist);
         Company HubRaum = new Company("iTXT","HubRaum", arraylist2);
@@ -88,23 +89,20 @@ public class VisitorActivity extends ActionBarActivity {
         CompanyList.add(HubRaum);
         CompanyList.add(Google);
 
-        JobOfferAdapter adapter = new JobOfferAdapter(this,
-        R.layout.array, arraylist);
-        listview.setAdapter(adapter);
 
 
 
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
-//        beaconManager.addFilter(new MinorFilter() {
-//            @Override
-//            public Boolean apply(AdvertisingPackage object) {
-//                if(object.getMinor()==4545)
-//                    return true;
-//                return false;
-//            }
-//        });
+        beaconManager.addFilter(new CustomFilter() {
+            @Override
+            public Boolean apply(AdvertisingPackage object) {
+                if(object.getMinor()==4545 && object.getProximity().name().equals("IMMEDIATE"))
+                    return true;
+                return false;
+            }
+        });
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onMonitorStart() {
@@ -122,27 +120,34 @@ public class VisitorActivity extends ActionBarActivity {
 
                 Log.d("Beacon","Appeared prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
 
-                try {
-                    KontaktApiClient kontaktApiClient = KontaktApiClient.newInstance();
-                    HttpResult<Device> deviceByProximity = kontaktApiClient.getDeviceByProximity(beacon.getProximityUUID(), beacon.getMajor(), beacon.getMinor());
+                if(currentBeacon == null || beacon.compareTo(currentBeacon)!=0)
+                {
+                    currentBeacon = beacon;
+                    Log.d("Change","view");
+                    // change view
+                    for (final Company company : CompanyList) {
+                        if(company.getBeacon_id().compareTo(beacon.getUniqueId())==0)
+                        {
+                            currentJobOffers = company.getJobOffers();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(listview.getAdapter()!= null)listview.setAdapter(null);
+                                    welcomeText.setText(company.getName());
+                                    JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
+                                            R.layout.array, company.getJobOffers());
+                                    listview.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
 
-                    Device device = deviceByProximity.get();
-                    List<BrowserAction> browserActions = device.getBrowserActions();
-                    List<ContentAction> contentActions = device.getContentActions();
 
-                    for (BrowserAction browserAction : browserActions) {
-                        String url = browserAction.getUrl();
+
+                        }
+                        Log.d("id","id");
                     }
-
-                    for (ContentAction contentAction : contentActions) {
-                        FileData fileData = contentAction.getFileData();
-                    }
-
-
-
-                } catch (ClientException e) {
-                    Log.d("Exception",e.toString());
                 }
+
 
             } // beacon appeared within desired region for the first time
 
@@ -153,21 +158,39 @@ public class VisitorActivity extends ActionBarActivity {
 
                     Log.d("Beacon","Updated prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
 
-                    if (currentBeacon == null)
-                        currentBeacon = beacon;
-
-                    if(beacon.getProximity().equals("IMMEDIATE"))
-                    {
-                        if(beacon.compareTo(currentBeacon)==0)
-                        {
-                            Log.d("Change","view");
-                            // change view
-                        }
-                    }
-                    currentBeacon = beacon;
+//                    if( beacon.getProximity().name().equals("IMMEDIATE"))
+//                    {
+//                        Log.d("Beacon update","IMMEDIATE");
+//                        if(currentBeacon == null || beacon.compareTo(currentBeacon)!=0)
+//                        {
+//                            currentBeacon = beacon;
+//                            Log.d("Change","view");
+//                            // change view
+//                            for (final Company company : CompanyList) {
+//                                if(company.getBeacon_id().compareTo(beacon.getUniqueId())==0)
+//                                {
+//                                    currentJobOffers = company.getJobOffers();
+//                                    runOnUiThread(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            if(listview.getAdapter()!= null)listview.setAdapter(null);
+//                                            welcomeText.setText(company.getName());
+//                                            JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
+//                                                    R.layout.array, company.getJobOffers());
+//                                            listview.setAdapter(adapter);
+//                                            adapter.notifyDataSetChanged();
+//                                        }
+//                                    });
+//
+//
+//
+//                                }
+//                                    Log.d("id","id");
+//                            }
+//                        }
+//                    }
                 }
 
-                //Log.d("Beacon","Updated");
 
             } // beacons that are visible within specified region are provided through this method callback. This method has the same
 
