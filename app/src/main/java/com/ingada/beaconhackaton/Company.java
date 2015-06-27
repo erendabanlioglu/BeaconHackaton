@@ -21,8 +21,21 @@ public class Company {
         return jobOffers;
     }
 
-    public ArrayList<JobOffer> getJobOffersByInterest() {
-        return jobOffers;
+    public ArrayList<JobOffer> getJobOffersByInterest(ArrayList<String> interest) {
+
+        ArrayList<JobOffer> jobOffersFilteredByInterest = new ArrayList<>();
+
+        for (JobOffer jobOffer : jobOffers) {
+
+            for (String jobInterest : jobOffer.getInterests()) {
+
+                if(interest.contains(jobInterest)) {
+                    jobOffersFilteredByInterest.add(jobOffer);
+                    break;
+                }
+            }
+        }
+        return jobOffersFilteredByInterest;
     }
 
     public void setJobOffers(ArrayList<JobOffer> jobOffers) {

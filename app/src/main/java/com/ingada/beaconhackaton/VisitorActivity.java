@@ -61,22 +61,22 @@ public class VisitorActivity extends ActionBarActivity {
         //Creation of all JobOffers
 
         final ArrayList<JobOffer> arraylist = new ArrayList<>();
-                arraylist.add(new JobOffer("Kontakt", "Poet", "POET"));
-                arraylist.add(new JobOffer("DifferentName", "it", "IT"));
-                arraylist.add(new JobOffer("OneMore", "it", "IT"));
-                arraylist.add(new JobOffer("Name", "Poet", "POET"));
+                arraylist.add(new JobOffer("Kontakt", "Poet", new ArrayList<String>() {{add("ios");}}));
+                arraylist.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("android");add("ios");}}));
+                arraylist.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("kittens");}}));
+                arraylist.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
 
         ArrayList<JobOffer> arraylist2 = new ArrayList<>();
-            arraylist2.add(new JobOffer("Hub", "Poet", "POET"));
-            arraylist2.add(new JobOffer("DifferentName", "it", "IT"));
-            arraylist2.add(new JobOffer("OneMore", "it", "IT"));
-            arraylist2.add(new JobOffer("Name", "Poet", "POET"));
+            arraylist2.add(new JobOffer("Hub", "Poet", new ArrayList<String>() {{add("cats");}}));
+            arraylist2.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("ios");}}));
+            arraylist2.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("android");}}));
+            arraylist2.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
 
         ArrayList<JobOffer> arraylist3 = new ArrayList<>();
-            arraylist3.add(new JobOffer("Google", "Poet", "POET"));
-            arraylist3.add(new JobOffer("DifferentName", "it", "IT"));
-            arraylist3.add(new JobOffer("OneMore", "it", "IT"));
-            arraylist3.add(new JobOffer("Name", "Poet", "POET"));
+            arraylist3.add(new JobOffer("Google", "Poet", new ArrayList<String>() {{add("cat");add("web");}}));
+            arraylist3.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("web");}}));
+            arraylist3.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("ios");add("cat");}}));
+            arraylist3.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
 
         final Company KontaktIO = new Company("9vVd","Kontakt.io", arraylist);
         Company HubRaum = new Company("iTXT","HubRaum", arraylist2);
