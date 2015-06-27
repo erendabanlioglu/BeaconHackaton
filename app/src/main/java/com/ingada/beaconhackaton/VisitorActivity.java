@@ -61,19 +61,24 @@ public class VisitorActivity extends ActionBarActivity {
 
         //Creation of all JobOffers
 
-//        final Company ITOffers = new Company();
-//        Company PoetOffers = new Company();
-//        JobOffer ITOfer1 = new JobOffer();
-//        final ArrayList<JobOffer> itJobsArray = new ArrayList<JobOffer>();
-//        itJobsArray.add(ITOfer1);
-//        ITOffers.setJobOffers(itJobsArray);
+        final Company ITOffers = new Company();
+        Company PoetOffers = new Company();
+        JobOffer ITOfer1 = new JobOffer();
 
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2" };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, values);
-        listview.setAdapter(adapter);
+        JobOffer[] jobOffers = {
+                new JobOffer("Name", "Milk", "Milk"),
+                new JobOffer("Name", "Milk", "Milk"),
+                new JobOffer("Name", "Milk", "Milk"),
+                new JobOffer("Name", "Milk", "Milk"),
+                new JobOffer("Name", "Milk", "Milk")};
+        ArrayAdapter<JobOffer> adapter = new ArrayAdapter<JobOffer>(this,
+        android.R.layout.simple_list_item_1, jobOffers);
+//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+//                "Linux", "OS/2" };
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+//                android.R.layout.simple_list_item_1, values);
+//        listview.setAdapter(adapter);
 
 
 

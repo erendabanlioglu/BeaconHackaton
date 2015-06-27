@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class JobOffer {
     private String title; //position
     private String description;
-    private ArrayList<String> interests;
+    private String interests;
 
-    public JobOffer(String title, String description, ArrayList<String> interests){
+    public JobOffer(String title, String description, String interests){
         this.title = title;
         this.description = description;
         this.interests = interests;
@@ -34,11 +34,11 @@ public class JobOffer {
         this.description = description;
     }
 
-    public ArrayList<String> getInterests() {
+    public String getInterests() {
         return interests;
     }
 
-    public void setInterests(ArrayList<String> interests) {
+    public void setInterests(String interests) {
         this.interests = interests;
     }
 }
