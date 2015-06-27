@@ -17,13 +17,25 @@ import com.kontakt.sdk.android.configuration.MonitorPeriod;
 import com.kontakt.sdk.android.connection.OnServiceBoundListener;
 import com.kontakt.sdk.android.device.BeaconDevice;
 import com.kontakt.sdk.android.device.Region;
+import com.kontakt.sdk.android.factory.AdvertisingPackage;
+import com.kontakt.sdk.android.factory.Filters;
+import com.kontakt.sdk.android.http.KontaktApiClient;
 import com.kontakt.sdk.android.manager.BeaconManager;
 
 import java.util.ArrayList;
+import com.kontakt.sdk.android.model.BrowserAction;
+import com.kontakt.sdk.android.model.ContentAction;
+import com.kontakt.sdk.android.model.Device;
+import com.kontakt.sdk.core.Proximity;
+import com.kontakt.sdk.core.exception.ClientException;
+import com.kontakt.sdk.core.http.FileData;
+import com.kontakt.sdk.core.http.HttpResult;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.kontakt.sdk.android.factory.Filters.*;
 
 
 public class VisitorActivity extends ActionBarActivity {
@@ -32,13 +44,14 @@ public class VisitorActivity extends ActionBarActivity {
     private BeaconManager beaconManager;
     private SharedPreferences sharedPreferences;
     private TextView welcomeText;
+    private BeaconDevice currentBeacon ;
     private ListView listview;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_visitor);
 
         welcomeText = (TextView) findViewById(R.id.welcome_text);
         listview = (ListView) findViewById(R.id.offer_list);
@@ -67,10 +80,12 @@ public class VisitorActivity extends ActionBarActivity {
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
-//        beaconManager.addFilter(new Filters.CustomFilter() {
+//        beaconManager.addFilter(new MinorFilter() {
 //            @Override
 //            public Boolean apply(AdvertisingPackage object) {
-//                return object.getBeaconUniqueId().equals("wsn9");
+//                if(object.getMinor()==4545)
+//                    return true;
+//                return false;
 //            }
 //        });
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
@@ -78,7 +93,6 @@ public class VisitorActivity extends ActionBarActivity {
             public void onMonitorStart() {
 
                 Log.d("Monitor","Start");
-
 
             } // active scan period starts
 
@@ -89,27 +103,68 @@ public class VisitorActivity extends ActionBarActivity {
             @Override
             public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
 
-                Log.d("Beacon", "Appeared");
-                //Find which beacon assosiated with which company, get list of it's offers.
-                //Set adapter to populate it with that list;
-                //update view
+                Log.d("Beacon","Appeared prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
+
+                try {
+                    KontaktApiClient kontaktApiClient = KontaktApiClient.newInstance();
+                    HttpResult<Device> deviceByProximity = kontaktApiClient.getDeviceByProximity(beacon.getProximityUUID(), beacon.getMajor(), beacon.getMinor());
+
+                    Device device = deviceByProximity.get();
+                    List<BrowserAction> browserActions = device.getBrowserActions();
+                    List<ContentAction> contentActions = device.getContentActions();
+
+                    for (BrowserAction browserAction : browserActions) {
+                        String url = browserAction.getUrl();
+                    }
+
+                    for (ContentAction contentAction : contentActions) {
+                        FileData fileData = contentAction.getFileData();
+                    }
+
+
+
+                } catch (ClientException e) {
+                    Log.d("Exception",e.toString());
+                }
 
             } // beacon appeared within desired region for the first time
 
             @Override
             public void onBeaconsUpdated(final Region venue, final List<BeaconDevice> beacons) {
 
-                Log.d("Beacon","Updated");
+                for (BeaconDevice beacon : beacons) {
+
+                    Log.d("Beacon","Updated prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
+
+                    if (currentBeacon == null)
+                        currentBeacon = beacon;
+
+                    if(beacon.getProximity().equals("IMMEDIATE"))
+                    {
+                        if(beacon.compareTo(currentBeacon)==0)
+                        {
+                            Log.d("Change","view");
+                            // change view
+                        }
+                    }
+                    currentBeacon = beacon;
+                }
+
+                //Log.d("Beacon","Updated");
 
             } // beacons that are visible within specified region are provided through this method callback. This method has the same
 
             @Override
             public void onRegionEntered(final Region venue) {
 
+                Log.d("Region","Entered major: "+venue.getMajor()+" minor: "+venue.getMinor());
+
             } // Android device enters the Region for the first time
 
             @Override
             public void onRegionAbandoned(final Region venue) {
+
+                Log.d("Region","Abandoned major: "+venue.getMajor()+" minor: "+venue.getMinor());
 
             } // Android device abandons the region
         });
