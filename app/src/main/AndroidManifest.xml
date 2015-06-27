@@ -57,6 +57,10 @@
             android:name=".CompanyActivity"
             android:label="@string/title_activity_company" >
         </activity>
+        <activity
+                android:name=".OfferDetailActivity"
+                android:label="@string/title_activity_company" >
+        </activity>
     </application>
 
 </manifest>

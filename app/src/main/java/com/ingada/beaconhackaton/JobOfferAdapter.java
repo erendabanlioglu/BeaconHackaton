@@ -45,7 +45,6 @@ public class JobOfferAdapter extends ArrayAdapter<JobOffer> {
 
 
             if (tt1 != null) {
-                if(value.equals("poet")) {tt1.setText("POET");}
                 tt1.setText(p.getTitle());
             }
 

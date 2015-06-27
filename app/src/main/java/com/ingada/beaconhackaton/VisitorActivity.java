@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.*;
 import com.kontakt.sdk.android.configuration.ForceScanConfiguration;
 import com.kontakt.sdk.android.configuration.MonitorPeriod;
@@ -22,7 +23,8 @@ import com.kontakt.sdk.android.factory.Filters;
 import com.kontakt.sdk.android.http.KontaktApiClient;
 import com.kontakt.sdk.android.manager.BeaconManager;
 
-import java.util.ArrayList;
+import java.util.*;
+
 import com.kontakt.sdk.android.model.BrowserAction;
 import com.kontakt.sdk.android.model.ContentAction;
 import com.kontakt.sdk.android.model.Device;
@@ -30,10 +32,6 @@ import com.kontakt.sdk.core.Proximity;
 import com.kontakt.sdk.core.exception.ClientException;
 import com.kontakt.sdk.core.http.FileData;
 import com.kontakt.sdk.core.http.HttpResult;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static com.kontakt.sdk.android.factory.Filters.*;
 
@@ -137,6 +135,20 @@ public class VisitorActivity extends ActionBarActivity {
                                     JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
                                             R.layout.array, company.getJobOffers());
                                     listview.setAdapter(adapter);
+                                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                                long id) {
+                                            JobOffer obj = (JobOffer) parent.getAdapter().getItem(position);
+                                            String title = (String) obj.getTitle();
+                                            Log.d("Yourtag", title);
+
+                                            Intent OfferDetailIntent = new Intent(VisitorActivity.this, OfferDetailActivity.class);
+                                            OfferDetailIntent.putExtra("jobTitle", obj.getTitle());
+                                            OfferDetailIntent.putExtra("jobDesc", obj.getDescription());
+                                            startActivity(OfferDetailIntent);
+                                        }
+                                    });
                                     adapter.notifyDataSetChanged();
                                 }
                             });
