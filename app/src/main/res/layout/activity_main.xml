@@ -9,9 +9,36 @@
               android:orientation="vertical"
                 tools:context="com.ingada.beaconhackaton.MainActivity" android:gravity="center_vertical|center_horizontal">
 
-    <Button
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Tell us what turns you on"
+            android:id="@+id/textView" android:layout_gravity="center_horizontal"/>
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="iOS"
+            android:id="@+id/checkBox"/>
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android"
+            android:id="@+id/checkBox4" android:layout_gravity="center_horizontal"/>
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Web Development"
+            android:id="@+id/checkBox3" android:layout_gravity="center_horizontal"/>
+
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Little kittens"
+            android:id="@+id/checkBox2"/>
+       <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
             android:id="@+id/button_visitor"/>
 </LinearLayout>

@@ -4,6 +4,7 @@ package com.ingada.beaconhackaton;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +15,23 @@ import android.widget.Button;
 public class MainActivity extends ActionBarActivity {
 
 
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
-
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String Name = "nameKey";
+    SharedPreferences sharedpreferences;
     private Button visitor_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //Shared
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("NameOfShared", "Nazwa testowa");
+        editor.commit();
+
 
         visitor_button = (Button) findViewById(R.id.button_visitor);
         visitor_button.setOnClickListener(new View.OnClickListener() {
@@ -34,14 +44,8 @@ public class MainActivity extends ActionBarActivity {
                 Log.d("login", "login");
             }
         });
-        //Shared Preferences
-        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-        editor.putString("name", "Elena");
-        editor.putInt("idName", 12);
-        editor.commit();
 
-
-        final Intent visitorIntent = new Intent(MainActivity.this, VisitorActivity.class);
+               final Intent visitorIntent = new Intent(MainActivity.this, VisitorActivity.class);
 
     }
 
@@ -62,5 +66,13 @@ public class MainActivity extends ActionBarActivity {
         super.onDestroy();
 
     }
-
+    private void SavePreferences(String key, String value){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+//            Intent sd = new Intent(this, Secongtess.class);
+//            startActivity(sd);
+    }
 }
+

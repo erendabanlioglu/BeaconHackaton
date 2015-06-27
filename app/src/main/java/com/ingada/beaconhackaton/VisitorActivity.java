@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,16 +39,10 @@ public class VisitorActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         welcomeText = (TextView) findViewById(R.id.welcome_text);
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String restoredText = prefs.getString("text", null);
-        if (restoredText != null) {
-            String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
-            int idName = prefs.getInt("idName", 0); //0 is the default value.
-            welcomeText.setText(name);
-        }
 
-
-
+        final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String value= (mSharedPreference.getString("NameOfShared", "Default_Value"));
+        welcomeText.setText(value);
 
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
