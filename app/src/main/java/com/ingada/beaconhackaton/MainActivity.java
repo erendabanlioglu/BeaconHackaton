@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.kontakt.sdk.android.configuration.ForceScanConfiguration;
 import com.kontakt.sdk.android.configuration.MonitorPeriod;
@@ -24,12 +27,18 @@ public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_CODE_ENABLE_BLUETOOTH = 1;
 
     private BeaconManager beaconManager;
+    private EditText logintext;
+    private Button loginbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //logn field mock
+        logintext = (EditText) findViewById(R.id.login);
+        loginbutton = (Button) findViewById(R.id.loginbutton);
+        final String loginValue = logintext.getText().toString();
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
@@ -43,6 +52,19 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onMonitorStop() {} // passive scan period starts
+        final Intent visitorintent = new Intent(MainActivity.this, VisitorActivity.class);
+        loginbutton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (loginValue == "visitor") {
+                            startActivity(visitorintent);
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "You shall not pass",Toast.LENGTH_LONG ).show();
+                        }
+                    }
+                });
 
             @Override
             public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
@@ -61,6 +83,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onRegionEntered(final Region venue) {
 
+                Toast toast = Toast.makeText(getApplicationContext() ,"Entered Beacon area", Toast.LENGTH_LONG);
+                toast.show();
 
             } // Android device enters the Region for the first time
 
