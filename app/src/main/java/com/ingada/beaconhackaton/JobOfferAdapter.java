@@ -1,6 +1,8 @@
 package com.ingada.beaconhackaton;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,9 @@ public class JobOfferAdapter extends ArrayAdapter<JobOffer> {
         super(context, resource, items);
     }
 
+    final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getContext());
+    String value= (mSharedPreference.getString("NameOfShared", "Default_Value"));
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -33,12 +38,14 @@ public class JobOfferAdapter extends ArrayAdapter<JobOffer> {
 
         JobOffer p = getItem(position);
 
+
         if (p != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.offer_tittle);
             TextView tt2 = (TextView) v.findViewById(R.id.offer_description);
 
 
             if (tt1 != null) {
+                if(value.equals("poet")) {tt1.setText("POET");}
                 tt1.setText(p.getTitle());
             }
 

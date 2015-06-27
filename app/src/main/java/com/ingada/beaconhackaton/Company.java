@@ -11,6 +11,12 @@ public class Company {
     private  String name;
     private ArrayList<JobOffer> jobOffers;
 
+    public Company(String beacon_id, String name, ArrayList<JobOffer> jobOffers) {
+        this.beacon_id = beacon_id;
+        this.name = name;
+        this.jobOffers = jobOffers;
+    }
+
     public ArrayList<JobOffer> getJobOffers() {
         return jobOffers;
     }
