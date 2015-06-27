@@ -18,17 +18,26 @@ import com.kontakt.sdk.android.configuration.MonitorPeriod;
 import com.kontakt.sdk.android.connection.OnServiceBoundListener;
 import com.kontakt.sdk.android.device.BeaconDevice;
 import com.kontakt.sdk.android.device.Region;
+import com.kontakt.sdk.android.factory.AdvertisingPackage;
+import com.kontakt.sdk.android.factory.Filters;
+import com.kontakt.sdk.android.manager.ActionController;
+import com.kontakt.sdk.android.manager.ActionManager;
 import com.kontakt.sdk.android.manager.BeaconManager;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class MainActivity extends ActionBarActivity {
     private static final int REQUEST_CODE_ENABLE_BLUETOOTH = 1;
 
     private BeaconManager beaconManager;
+    private ActionController actionController;
     private EditText logintext;
     private Button loginbutton;
+    private ActionManager actionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +48,25 @@ public class MainActivity extends ActionBarActivity {
         logintext = (EditText) findViewById(R.id.login);
         loginbutton = (Button) findViewById(R.id.loginbutton);
         final String loginValue = logintext.getText().toString();
+        final Intent visitorIntent = new Intent(MainActivity.this, VisitorActivity.class);
+        loginbutton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(loginValue == "visitor") {startActivity(visitorIntent);}
+                        else {Toast.makeText(getApplicationContext(),"You shall not pass", Toast.LENGTH_LONG).show();}
+                    }
+                });
+
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
+//        beaconManager.addFilter(new Filters.CustomFilter() {
+//            @Override
+//            public Boolean apply(AdvertisingPackage object) {
+//                return object.getBluetoothDevice().getUuids().equals("f7826da6-4fa2-4e98-8024-bc5b71e0893e");
+//            }
+//        });
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onMonitorStart() {
@@ -52,24 +77,15 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onMonitorStop() {} // passive scan period starts
-        final Intent visitorintent = new Intent(MainActivity.this, VisitorActivity.class);
-        loginbutton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (loginValue == "visitor") {
-                            startActivity(visitorintent);
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "You shall not pass",Toast.LENGTH_LONG ).show();
-                        }
-                    }
-                });
+
 
             @Override
             public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
 
-                Log.d("Beacon","Appeared");
+                Log.d("Beacon", "Appeared");
+                actionController.notifyActionsFound(beacon);
+
+
 
             } // beacon appeared within desired region for the first time
 
@@ -83,8 +99,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onRegionEntered(final Region venue) {
 
-                Toast toast = Toast.makeText(getApplicationContext() ,"Entered Beacon area", Toast.LENGTH_LONG);
-                toast.show();
+
 
             } // Android device enters the Region for the first time
 
@@ -148,6 +163,12 @@ public class MainActivity extends ActionBarActivity {
                 @Override
                 public void onServiceBound() {
                     try {
+                        Set<Region> regions = new HashSet<Region>();
+
+                     /*   UUID id = UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e");
+                        Region ourBeacon = new Region (id,62609,54573);*/
+//
+//                        regions.add(ourBeacon);
                         beaconManager.startMonitoring();
                     } catch (RemoteException e) {
                         e.printStackTrace();
