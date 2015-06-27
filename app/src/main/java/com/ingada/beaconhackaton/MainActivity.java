@@ -46,10 +46,20 @@ public class MainActivity extends ActionBarActivity {
             public void onBeaconsUpdated(final Region venue, final List<BeaconDevice> beacons) {} // beacons that are visible within specified region are provided through this method callback. This method has the same
 
             @Override
-            public void onRegionEntered(final Region venue) {} // Android device enters the Region for the first time
+            public void onRegionEntered(final Region venue) {
+
+                Toast toast = Toast.makeText(getApplicationContext() ,"Entered Beacon area", Toast.LENGTH_LONG);
+                toast.show();
+
+            } // Android device enters the Region for the first time
 
             @Override
-            public void onRegionAbandoned(final Region venue) {} // Android device abandons the region
+            public void onRegionAbandoned(final Region venue) {
+
+                Toast toast = Toast.makeText(getApplicationContext() ,"Left Beacon area", Toast.LENGTH_LONG);
+                toast.show();
+
+            } // Android device abandons the region
         });
     }
 
@@ -106,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
                 @Override
                 public void onServiceBound() {
                     try {
-                        beaconManager.startMonitoring();
+                        beaconManager.startMonitoring((Set<Region>) Region.EVERYWHERE);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
