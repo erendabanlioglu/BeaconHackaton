@@ -65,20 +65,16 @@ public class VisitorActivity extends ActionBarActivity {
         Company PoetOffers = new Company();
         JobOffer ITOfer1 = new JobOffer();
 
-        JobOffer[] jobOffers = {
-                new JobOffer("Name", "Milk", "Milk"),
-                new JobOffer("Name", "Milk", "Milk"),
-                new JobOffer("Name", "Milk", "Milk"),
-                new JobOffer("Name", "Milk", "Milk"),
-                new JobOffer("Name", "Milk", "Milk")};
-        ArrayAdapter<JobOffer> adapter = new ArrayAdapter<JobOffer>(this,
-        android.R.layout.simple_list_item_1, jobOffers);
-//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//                "Linux", "OS/2" };
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-//                android.R.layout.simple_list_item_1, values);
-//        listview.setAdapter(adapter);
+        ArrayList<JobOffer> arraylist = new ArrayList<>();
+                arraylist.add(new JobOffer("Name", "Milk", "Milk"));
+//                new JobOffer("Name", "Milk", "Milk"),
+//                new JobOffer("Name", "Milk", "Milk"),
+//                new JobOffer("Name", "Milk", "Milk"),
+//                new JobOffer("Name", "Milk", "Milk");
+        JobOfferAdapter adapter = new JobOfferAdapter(this,
+        R.layout.array, arraylist);
+        listview.setAdapter(adapter);
+
 
 
 
