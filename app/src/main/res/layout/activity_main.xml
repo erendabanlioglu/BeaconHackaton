@@ -12,14 +12,6 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Visitor"
-            android:id="@+id/visitor_button" android:layout_below="@+id/login" android:layout_alignParentStart="true"
-            android:layout_gravity="center"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Company"
-            android:id="@+id/company_button" android:layout_below="@+id/login" android:layout_alignParentStart="true"
-            android:layout_gravity="center_horizontal"/>
-
+            android:text="New Button"
+            android:id="@+id/button_visitor"/>
 </LinearLayout>
