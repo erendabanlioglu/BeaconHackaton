@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("NameOfShared", "Nazwa testowa");
         editor.commit();
+        
 
 
         visitor_button = (Button) findViewById(R.id.button_visitor);

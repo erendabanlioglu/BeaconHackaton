@@ -11,14 +11,15 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.kontakt.sdk.android.configuration.ForceScanConfiguration;
 import com.kontakt.sdk.android.configuration.MonitorPeriod;
 import com.kontakt.sdk.android.connection.OnServiceBoundListener;
 import com.kontakt.sdk.android.device.BeaconDevice;
 import com.kontakt.sdk.android.device.Region;
 import com.kontakt.sdk.android.manager.BeaconManager;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class VisitorActivity extends ActionBarActivity {
     private BeaconManager beaconManager;
     private SharedPreferences sharedPreferences;
     private TextView welcomeText;
+    private ListView listview;
 
 
     @Override
@@ -39,10 +41,28 @@ public class VisitorActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         welcomeText = (TextView) findViewById(R.id.welcome_text);
-
+        listview = (ListView) findViewById(R.id.offer_list);
         final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String value= (mSharedPreference.getString("NameOfShared", "Default_Value"));
         welcomeText.setText(value);
+
+        //Creation of all JobOffers
+
+//        final Company ITOffers = new Company();
+//        Company PoetOffers = new Company();
+//        JobOffer ITOfer1 = new JobOffer();
+//        final ArrayList<JobOffer> itJobsArray = new ArrayList<JobOffer>();
+//        itJobsArray.add(ITOfer1);
+//        ITOffers.setJobOffers(itJobsArray);
+
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2" };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, values);
+        listview.setAdapter(adapter);
+
+
 
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
@@ -59,6 +79,7 @@ public class VisitorActivity extends ActionBarActivity {
 
                 Log.d("Monitor","Start");
 
+
             } // active scan period starts
 
             @Override
@@ -69,6 +90,9 @@ public class VisitorActivity extends ActionBarActivity {
             public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
 
                 Log.d("Beacon", "Appeared");
+                //Find which beacon assosiated with which company, get list of it's offers.
+                //Set adapter to populate it with that list;
+                //update view
 
             } // beacon appeared within desired region for the first time
 
