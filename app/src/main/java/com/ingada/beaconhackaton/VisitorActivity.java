@@ -45,7 +45,6 @@ public class VisitorActivity extends ActionBarActivity {
     private BeaconDevice currentBeacon ;
     private ListView listview;
     private ArrayList<Company> CompanyList;
-    private ArrayList<JobOffer> currentJobOffers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +125,6 @@ public class VisitorActivity extends ActionBarActivity {
                     for (final Company company : CompanyList) {
                         if(company.getBeacon_id().compareTo(beacon.getUniqueId())==0)
                         {
-                            currentJobOffers = company.getJobOffers();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -170,37 +168,28 @@ public class VisitorActivity extends ActionBarActivity {
 
                     Log.d("Beacon","Updated prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
 
-//                    if( beacon.getProximity().name().equals("IMMEDIATE"))
-//                    {
-//                        Log.d("Beacon update","IMMEDIATE");
-//                        if(currentBeacon == null || beacon.compareTo(currentBeacon)!=0)
-//                        {
-//                            currentBeacon = beacon;
-//                            Log.d("Change","view");
-//                            // change view
-//                            for (final Company company : CompanyList) {
-//                                if(company.getBeacon_id().compareTo(beacon.getUniqueId())==0)
-//                                {
-//                                    currentJobOffers = company.getJobOffers();
-//                                    runOnUiThread(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//                                            if(listview.getAdapter()!= null)listview.setAdapter(null);
-//                                            welcomeText.setText(company.getName());
-//                                            JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
-//                                                    R.layout.array, company.getJobOffers());
-//                                            listview.setAdapter(adapter);
-//                                            adapter.notifyDataSetChanged();
-//                                        }
-//                                    });
-//
-//
-//
-//                                }
-//                                    Log.d("id","id");
-//                            }
-//                        }
-//                    }
+                    if(currentBeacon != null && beacon.compareTo(currentBeacon)!=0)
+                    {
+                        currentBeacon = beacon;
+                        for (final Company company : CompanyList) {
+
+                            if(company.getBeacon_id().compareTo(beacon.getUniqueId())==0)
+                            {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(listview.getAdapter()!= null)listview.setAdapter(null);
+                                        welcomeText.setText(company.getName());
+                                        JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
+                                                R.layout.array, company.getJobOffers());
+                                        listview.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        }
+                    }
+
                 }
 
 
