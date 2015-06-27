@@ -15,6 +15,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Tell us what turns you on"
             android:id="@+id/textView" android:layout_gravity="center_horizontal"/>
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -21,6 +21,10 @@ public class Company {
         return jobOffers;
     }
 
+    public ArrayList<JobOffer> getJobOffersByInterest() {
+        return jobOffers;
+    }
+
     public void setJobOffers(ArrayList<JobOffer> jobOffers) {
         this.jobOffers = jobOffers;
     }
