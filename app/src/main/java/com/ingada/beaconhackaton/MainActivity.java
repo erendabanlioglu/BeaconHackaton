@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,30 +35,37 @@ public class MainActivity extends ActionBarActivity {
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
-            public void onMonitorStart() {} // active scan period starts
+            public void onMonitorStart() {
+
+                Log.d("Monitor","Start");
+
+            } // active scan period starts
 
             @Override
             public void onMonitorStop() {} // passive scan period starts
 
             @Override
-            public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {} // beacon appeared within desired region for the first time
+            public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
+
+                Log.d("Beacon","Appeared");
+
+            } // beacon appeared within desired region for the first time
 
             @Override
-            public void onBeaconsUpdated(final Region venue, final List<BeaconDevice> beacons) {} // beacons that are visible within specified region are provided through this method callback. This method has the same
+            public void onBeaconsUpdated(final Region venue, final List<BeaconDevice> beacons) {
+
+                Log.d("Beacon","Updated");
+
+            } // beacons that are visible within specified region are provided through this method callback. This method has the same
 
             @Override
             public void onRegionEntered(final Region venue) {
 
-                Toast toast = Toast.makeText(getApplicationContext() ,"Entered Beacon area", Toast.LENGTH_LONG);
-                toast.show();
 
             } // Android device enters the Region for the first time
 
             @Override
             public void onRegionAbandoned(final Region venue) {
-
-                Toast toast = Toast.makeText(getApplicationContext() ,"Left Beacon area", Toast.LENGTH_LONG);
-                toast.show();
 
             } // Android device abandons the region
         });
@@ -116,7 +124,7 @@ public class MainActivity extends ActionBarActivity {
                 @Override
                 public void onServiceBound() {
                     try {
-                        beaconManager.startMonitoring((Set<Region>) Region.EVERYWHERE);
+                        beaconManager.startMonitoring();
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
