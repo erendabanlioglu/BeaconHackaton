@@ -1,28 +1,24 @@
 package com.ingada.beaconhackaton;
 
-import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class VisitorActivity extends ActionBarActivity {
+public class CompanyActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visitor);
-        ActionBar ab = getActionBar();
-        ab.setTitle("Visitor");
-
+        setContentView(R.layout.activity_company);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_visitor, menu);
+        getMenuInflater().inflate(R.menu.menu_company, menu);
         return true;
     }
 

@@ -1,5 +1,6 @@
 package com.ingada.beaconhackaton;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -23,7 +24,6 @@ import com.kontakt.sdk.android.factory.Filters;
 import com.kontakt.sdk.android.manager.ActionController;
 import com.kontakt.sdk.android.manager.ActionManager;
 import com.kontakt.sdk.android.manager.BeaconManager;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,38 +35,50 @@ public class MainActivity extends ActionBarActivity {
 
     private BeaconManager beaconManager;
     private ActionController actionController;
-    private EditText logintext;
-    private Button loginbutton;
-    private ActionManager actionManager;
+
+    private Button visitor_button;
+    private Button company_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar ab = getActionBar();
+        ab.setSubtitle("Expo App");
+
         //logn field mock
-        logintext = (EditText) findViewById(R.id.login);
-        loginbutton = (Button) findViewById(R.id.loginbutton);
-        final String loginValue = logintext.getText().toString();
+
+        visitor_button = (Button) findViewById(R.id.visitor_button);
+        company_button = (Button) findViewById(R.id.company_button);
+
         final Intent visitorIntent = new Intent(MainActivity.this, VisitorActivity.class);
-        loginbutton.setOnClickListener(
+        final Intent companyIntent = new Intent(MainActivity.this, CompanyActivity.class);
+        visitor_button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(loginValue == "visitor") {startActivity(visitorIntent);}
-                        else {Toast.makeText(getApplicationContext(),"You shall not pass", Toast.LENGTH_LONG).show();}
+                        startActivity(visitorIntent);
+                                          }
+                });
+
+        company_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(companyIntent);
                     }
                 });
 
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
-//        beaconManager.addFilter(new Filters.CustomFilter() {
-//            @Override
-//            public Boolean apply(AdvertisingPackage object) {
-//                return object.getBluetoothDevice().getUuids().equals("f7826da6-4fa2-4e98-8024-bc5b71e0893e");
-//            }
-//        });
+        beaconManager.addFilter(new Filters.CustomFilter() {
+            @Override
+            public Boolean apply(AdvertisingPackage object) {
+                return object.getBeaconUniqueId().equals("wsn9");
+            }
+        });
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onMonitorStart() {
@@ -85,8 +97,6 @@ public class MainActivity extends ActionBarActivity {
                 Log.d("Beacon", "Appeared");
                 actionController.notifyActionsFound(beacon);
 
-
-
             } // beacon appeared within desired region for the first time
 
             @Override
@@ -98,8 +108,6 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onRegionEntered(final Region venue) {
-
-
 
             } // Android device enters the Region for the first time
 
