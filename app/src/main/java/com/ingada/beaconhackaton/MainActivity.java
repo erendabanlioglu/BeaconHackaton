@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -19,18 +20,27 @@ public class MainActivity extends ActionBarActivity {
     public static final String Name = "nameKey";
     SharedPreferences sharedpreferences;
     private Button visitor_button;
+    private CheckBox int1;
+    private CheckBox int2;
+    private CheckBox int3;
+    private CheckBox int4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        int1 = (CheckBox) findViewById(R.id.ios_check);
+        int2 = (CheckBox) findViewById(R.id.android_check);
+        int3 = (CheckBox) findViewById(R.id.web_check);
+        int4 = (CheckBox) findViewById(R.id.kitten_check);
 
 
         //Shared
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("NameOfShared", "Nazwa testowa");
-        editor.commit();
+
+
+
         
 
 
@@ -40,8 +50,34 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v)
             {
+
+                if (int1.isChecked()) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("ios_check", "ios");
+                    editor.commit();
+                }
+                if (int2.isChecked()) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("android_check", "android");
+                    editor.commit();
+                }
+                if (((CheckBox) v).isChecked()) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("web_check", "web");
+                    editor.commit();
+                }
+                if (((CheckBox) v).isChecked()) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("kitten_check", "kittens");
+                    editor.commit();}
+
                 Intent visitor_intent = new Intent(MainActivity.this, VisitorActivity.class);
                 startActivity(visitor_intent);
+
                 Log.d("login", "login");
             }
         });
@@ -67,13 +103,8 @@ public class MainActivity extends ActionBarActivity {
         super.onDestroy();
 
     }
-    private void SavePreferences(String key, String value){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
-        editor.commit();
-//            Intent sd = new Intent(this, Secongtess.class);
-//            startActivity(sd);
-    }
+
+
+
 }
 

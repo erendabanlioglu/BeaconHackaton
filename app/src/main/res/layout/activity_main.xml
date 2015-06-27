@@ -24,23 +24,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="iOS"
-            android:id="@+id/checkBox"/>
+            android:id="@+id/ios_check"/>
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Android"
-            android:id="@+id/checkBox4" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/android_check" android:layout_gravity="center_horizontal"/>
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Web Development"
-            android:id="@+id/checkBox3" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/web_check" android:layout_gravity="center_horizontal"/>
 
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Little kittens"
-            android:id="@+id/checkBox2"/>
+            android:id="@+id/kitten_check"/>
        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
