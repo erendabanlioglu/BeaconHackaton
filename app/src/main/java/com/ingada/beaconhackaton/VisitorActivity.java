@@ -45,6 +45,7 @@ public class VisitorActivity extends ActionBarActivity {
     private BeaconDevice currentBeacon ;
     private ListView listview;
     private ArrayList<Company> CompanyList;
+    private ArrayList<String> userInterests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +59,28 @@ public class VisitorActivity extends ActionBarActivity {
         String value= (mSharedPreference.getString("NameOfShared", "Default_Value"));
         welcomeText.setText(value);
 
+        userInterests = new ArrayList<String>() {{
+            add(mSharedPreference.getString("ios_check",""));
+            add(mSharedPreference.getString("android_check",""));
+            add(mSharedPreference.getString("web_check",""));
+            add(mSharedPreference.getString("kittens_check",""));
+        }};
+
+
+
         //Creation of all JobOffers
 
         final ArrayList<JobOffer> arraylist = new ArrayList<>();
                 arraylist.add(new JobOffer("Kontakt", "Poet", new ArrayList<String>() {{add("ios");}}));
                 arraylist.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("android");add("ios");}}));
-                arraylist.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("kittens");}}));
-                arraylist.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
+                arraylist.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{
+                    add("kittens");
+                }}));
+                arraylist.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{
+                    add("web");
+                    add("android");
+                    add("ios");
+                }}));
 
         ArrayList<JobOffer> arraylist2 = new ArrayList<>();
             arraylist2.add(new JobOffer("Hub", "Poet", new ArrayList<String>() {{add("cats");}}));
@@ -128,11 +144,13 @@ public class VisitorActivity extends ActionBarActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+
                                     if(listview.getAdapter()!= null)listview.setAdapter(null);
                                     welcomeText.setText(company.getName());
                                     JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
-                                            R.layout.array, company.getJobOffers());
+                                            R.layout.array, company.getJobOffersByInterest(userInterests));
                                     listview.setAdapter(adapter);
+
                                     listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -181,7 +199,7 @@ public class VisitorActivity extends ActionBarActivity {
                                         if(listview.getAdapter()!= null)listview.setAdapter(null);
                                         welcomeText.setText(company.getName());
                                         JobOfferAdapter adapter = new JobOfferAdapter(getBaseContext(),
-                                                R.layout.array, company.getJobOffers());
+                                                R.layout.array, company.getJobOffersByInterest(userInterests));
                                         listview.setAdapter(adapter);
                                         adapter.notifyDataSetChanged();
                                     }

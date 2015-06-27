@@ -51,27 +51,23 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v)
             {
 
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+
                 if (int1.isChecked()) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("ios_check", "ios");
                     editor.commit();
                 }
                 if (int2.isChecked()) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("android_check", "android");
                     editor.commit();
                 }
-                if (((CheckBox) v).isChecked()) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = prefs.edit();
+                if (int3.isChecked()) {
                     editor.putString("web_check", "web");
                     editor.commit();
                 }
-                if (((CheckBox) v).isChecked()) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = prefs.edit();
+                if (int4.isChecked()) {
                     editor.putString("kitten_check", "kittens");
                     editor.commit();}
 

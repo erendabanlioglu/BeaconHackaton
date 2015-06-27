@@ -22,8 +22,7 @@ public class OfferDetailActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_offer_detail, menu);
-        welcometext = (TextView) findViewById(R.id.welcome_text_offer);
+        welcometext = (TextView) findViewById(R.id.offer_tittle);
         Intent intent = getIntent();
     intent.getStringExtra("tag");
         welcometext.setText(intent.getStringExtra("jobTitle")+"/n"+intent.getStringExtra("jobDesc"));
