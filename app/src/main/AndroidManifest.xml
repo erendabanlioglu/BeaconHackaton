@@ -51,7 +51,7 @@
 
         <activity
             android:name=".VisitorActivity"
-            android:label="@string/title_activity_visitor" >
+            android:label="Company Page" >
         </activity>
         <activity
             android:name=".CompanyActivity"
@@ -59,11 +59,12 @@
         </activity>
         <activity
             android:name=".OfferDetailActivity"
-            android:label="@string/title_activity_company" >
+            android:label="Offer Details" >
         </activity>
         <activity
             android:name=".InterestedCompaniesActivity"
-            android:label="@string/title_activity_intereste_companies" >
+            android:label="Interesting Companies">
+
         </activity>
     </application>
 

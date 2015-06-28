@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
+                editor.commit();
 
                 if (int1.isChecked()) {
                     editor.putString("ios_check", "ios");

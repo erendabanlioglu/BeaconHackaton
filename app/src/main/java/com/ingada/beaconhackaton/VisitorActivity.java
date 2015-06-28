@@ -56,7 +56,7 @@ public class VisitorActivity extends ActionBarActivity {
         listview = (ListView) findViewById(R.id.offer_list);
         CompanyList = new ArrayList<>();
         final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String value= (mSharedPreference.getString("NameOfShared", "Default_Value"));
+        String value= (mSharedPreference.getString("NameOfShared", "Listening..."));
         welcomeText.setText(value);
 
         userInterests = new ArrayList<String>() {{
@@ -71,28 +71,28 @@ public class VisitorActivity extends ActionBarActivity {
         //Creation of all JobOffers
 
         final ArrayList<JobOffer> arraylist = new ArrayList<>();
-                arraylist.add(new JobOffer("Kontakt", "Poet", new ArrayList<String>() {{add("ios");}}));
-                arraylist.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("android");add("ios");}}));
-                arraylist.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{
+                arraylist.add(new JobOffer("Kontakt Designer", "Poet", new ArrayList<String>() {{add("ios");}}));
+                arraylist.add(new JobOffer("Senior Android Developer", "it", new ArrayList<String>() {{add("android");add("ios");}}));
+                arraylist.add(new JobOffer("Cat Lover", "You need the pet the cat", new ArrayList<String>() {{
                     add("kitten");
                 }}));
-                arraylist.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{
+                arraylist.add(new JobOffer("Full-stack developer", "Mobile, web, back-end everything you must have", new ArrayList<String>() {{
                     add("web");
                     add("android");
                     add("ios");
                 }}));
 
         ArrayList<JobOffer> arraylist2 = new ArrayList<>();
-            arraylist2.add(new JobOffer("Hub", "Poet", new ArrayList<String>() {{add("kitten");}}));
-            arraylist2.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("ios");}}));
-            arraylist2.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("android");}}));
-            arraylist2.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
+            arraylist2.add(new JobOffer("Hub:Raum Ceo", "Poet", new ArrayList<String>() {{add("kitten");}}));
+            arraylist2.add(new JobOffer("Entrepreneur", "Find the best business ideas", new ArrayList<String>() {{add("ios");}}));
+            arraylist2.add(new JobOffer("Call Center Assistance", "Work more paid less", new ArrayList<String>() {{add("android");}}));
+            arraylist2.add(new JobOffer("Developer", "Find something to develop", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
 
         ArrayList<JobOffer> arraylist3 = new ArrayList<>();
-            arraylist3.add(new JobOffer("Google", "Poet", new ArrayList<String>() {{add("cat");add("web");}}));
-            arraylist3.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("web");}}));
-            arraylist3.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("ios");add("cat");}}));
-            arraylist3.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
+            arraylist3.add(new JobOffer("Google intern", "Poet", new ArrayList<String>() {{add("cat");add("web");}}));
+            arraylist3.add(new JobOffer("Web Designer", "We actually search for spider-man", new ArrayList<String>() {{add("web");}}));
+            arraylist3.add(new JobOffer("Mobile Developer", "We love cats", new ArrayList<String>() {{add("ios");add("cat");}}));
+            arraylist3.add(new JobOffer("Combine Developer", "Android Ios Web no matter", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
 
         final Company KontaktIO = new Company("9vVd","Kontakt.io", arraylist,new ArrayList<String>() {{add("ios");add("kitten");}});
         Company HubRaum = new Company("iTXT","HubRaum", arraylist2,new ArrayList<String>() {{add("web");add("android");}});
@@ -106,14 +106,15 @@ public class VisitorActivity extends ActionBarActivity {
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
-        beaconManager.addFilter(new CustomFilter() {
-            @Override
-            public Boolean apply(AdvertisingPackage object) {
-                if(object.getMinor()==4545 && object.getProximity().name().equals("IMMEDIATE"))
-                    return true;
-                return false;
-            }
-        });
+//        beaconManager.addFilter(new CustomFilter() {
+//            @Override
+//            public Boolean apply(AdvertisingPackage object) {
+//                //if(object.getMinor()==4545 && object.getProximity().name().equals("IMMEDIATE"))
+//                 if(object.getBeaconUniqueId().equals("iTXT"))
+//                    return true;
+//                return false;
+//            }
+//        });
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onMonitorStart() {
@@ -129,7 +130,14 @@ public class VisitorActivity extends ActionBarActivity {
             @Override
             public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
 
-                Log.d("Beacon","Appeared prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Toast.makeText(getApplicationContext(), "Appeared Black prox: "+beacon.getProximity(), Toast.LENGTH_LONG).show();
+                    }});
+
+                Log.d("Beacon", "Appeared prox: " + beacon.getProximity() + " major: " + beacon.getMajor() + " minor: " + beacon.getMinor() + " name: " + beacon.getName() + " id: " + beacon.getUniqueId() + " Tx power: " + beacon.getTxPower());
 
                 if(currentBeacon == null || beacon.compareTo(currentBeacon)!=0)
                 {
@@ -180,7 +188,16 @@ public class VisitorActivity extends ActionBarActivity {
             @Override
             public void onBeaconsUpdated(final Region venue, final List<BeaconDevice> beacons) {
 
-                for (BeaconDevice beacon : beacons) {
+
+                for (final BeaconDevice beacon : beacons) {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(getApplicationContext(), "Update Black + prox: "+beacon.getProximity(), Toast.LENGTH_LONG).show();
+                        }});
+
 
                     Log.d("Beacon","Updated prox: " + beacon.getProximity()+ " major: "+ beacon.getMajor()+" minor: "+beacon.getMinor()+" name: "+ beacon.getName() +" id: "+beacon.getUniqueId()+ " Tx power: "+beacon.getTxPower());
 
