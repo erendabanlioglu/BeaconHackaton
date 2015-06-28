@@ -106,15 +106,13 @@ public class VisitorActivity extends ActionBarActivity {
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
-//        beaconManager.addFilter(new CustomFilter() {
-//            @Override
-//            public Boolean apply(AdvertisingPackage object) {
-//                //if(object.getMinor()==4545 && object.getProximity().name().equals("IMMEDIATE"))
-//                 if(object.getBeaconUniqueId().equals("iTXT"))
-//                    return true;
-//                return false;
-//            }
-//        });
+        beaconManager.addFilter(new CustomFilter() {
+            @Override
+            public Boolean apply(AdvertisingPackage object) {
+                return(object.getMinor()==4545 && object.getProximity().name().equals("IMMEDIATE"));
+                 //return (object.getBeaconUniqueId().equals("iTXT"));
+            }
+        });
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onMonitorStart() {
