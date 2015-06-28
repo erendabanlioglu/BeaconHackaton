@@ -9,12 +9,12 @@
     tools:context="com.ingada.beaconhackaton.InterestedCompaniesActivity" android:weightSum="1"
               android:gravity="center_horizontal">
 
-    <TextView android:text="There are companies you may be interested in." android:layout_width="wrap_content"
+    <TextView android:text="Companies you may be interested in." android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3" android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="480dp"
         android:id="@+id/listViewMatchedCompanies"
         android:layout_below="@+id/textView3"
