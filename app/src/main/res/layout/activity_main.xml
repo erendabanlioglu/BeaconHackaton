@@ -20,6 +20,9 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/activity_vertical_margin">
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Android"
-            android:id="@+id/android_check" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/android_check"/>
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,9 +44,19 @@
             android:layout_height="wrap_content"
             android:text="Little kittens"
             android:id="@+id/kitten_check"/>
-       <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/button_visitor"
             android:text="Next"
-            android:id="@+id/button_visitor"/>
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:background="@drawable/button_shape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:gravity="center_vertical|center_horizontal"/>
 </LinearLayout>

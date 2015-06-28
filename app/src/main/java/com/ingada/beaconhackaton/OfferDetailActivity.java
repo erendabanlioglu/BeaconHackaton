@@ -15,14 +15,24 @@ public class OfferDetailActivity extends ActionBarActivity {
 
     TextView welcometext;
     Button applyButton;
+    Button lnApplyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_detail);
         applyButton = (Button) findViewById(R.id.activity_offer_button);
+        lnApplyButton = (Button) findViewById(R.id.activity_offer_ln_button);
 
         applyButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(getApplicationContext(), "Thanks for applying", Toast.LENGTH_LONG).show();
+            }
+        });
+        lnApplyButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v)

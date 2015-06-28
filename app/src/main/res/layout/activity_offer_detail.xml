@@ -32,10 +32,28 @@
                     android:id="@+id/textView2" android:layout_below="@+id/activity_offer_title"
                     android:layout_alignParentStart="true" />
             <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Apply Now"
-                    android:id="@+id/activity_offer_button" />
+
+                    android:text="Apply with App"
+                    android:id="@+id/activity_offer_button"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/button_shape"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            <Button
+                    android:layout_width="160dp"
+                    android:layout_height="35dp"
+                    android:width="200dp"
+
+                    android:background="@drawable/linkedin_button"
+
+                    android:id="@+id/activity_offer_ln_button" android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
     </ScrollView>
