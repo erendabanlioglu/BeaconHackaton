@@ -1,7 +1,6 @@
 package com.ingada.beaconhackaton;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -68,11 +67,11 @@ public class MainActivity extends ActionBarActivity {
                     editor.commit();
                 }
                 if (int4.isChecked()) {
-                    editor.putString("kitten_check", "kittens");
+                    editor.putString("kitten_check", "kitten");
                     editor.commit();}
 
-                Intent visitor_intent = new Intent(MainActivity.this, VisitorActivity.class);
-                startActivity(visitor_intent);
+                Intent interest_intent = new Intent(MainActivity.this, InterestedCompaniesActivity.class);
+                startActivity(interest_intent);
 
                 Log.d("login", "login");
             }

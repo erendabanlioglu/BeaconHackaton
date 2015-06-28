@@ -13,9 +13,10 @@ import android.widget.Toast;
 
 public class OfferDetailActivity extends ActionBarActivity {
 
-    TextView welcometext;
+    
     Button applyButton;
     Button lnApplyButton;
+    TextView offerTitle,offerDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +42,20 @@ public class OfferDetailActivity extends ActionBarActivity {
             }
         });
 
+
+        offerTitle = (TextView) findViewById(R.id.activity_offer_description);
+        offerDesc = (TextView) findViewById(R.id.textView2);
+
+        Intent intent = getIntent();
+        offerTitle.setText(intent.getStringExtra("jobTitle"));
+        offerDesc.setText(intent.getStringExtra("jobDesc"));
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        welcometext = (TextView) findViewById(R.id.offer_tittle);
-        Intent intent = getIntent();
-    intent.getStringExtra("tag");
-        welcometext.setText(intent.getStringExtra("jobTitle")+"/n"+intent.getStringExtra("jobDesc"));
 
         return true;
     }

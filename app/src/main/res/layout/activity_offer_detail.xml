@@ -28,9 +28,17 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Large Text"
+                    android:text="As a developer you  will focus on development of in-memory data cube technology. Your responsibilities would also include delivery of new functionality as well as support of existing systems using industry best practices to  deliver business value. The role also includes discussion of requirements, design and testing issues with the business project team. "
                     android:id="@+id/textView2" android:layout_below="@+id/activity_offer_title"
                     android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\nRequirements:\n \n-Very good Java skills with an emphasis on server side components with strong object oriented design skills; as one of the lead developers OLAP related skills such as MDX would be essential\n-Practical experience using core Java development platforms, messaging systems, test frameworks and build and deploy technology (our client currently uses ActiveMQ, Spring, Maven and Junit so knowledge in these or similar technologies is key)\n-Development experience in Investment Banking, Front Office, Algorithmic Trading, Foreign Exchange Market, Data or Market Risk\n-Very good verbal and written communication skills"
+                android:id="@+id/textView4"
+                android:layout_gravity="center_horizontal" />
+
             <Button
 
                     android:text="Apply with App"

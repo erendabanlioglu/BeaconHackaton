@@ -11,10 +11,21 @@ public class Company {
     private  String name;
     private ArrayList<JobOffer> jobOffers;
 
-    public Company(String beacon_id, String name, ArrayList<JobOffer> jobOffers) {
+    public ArrayList<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(ArrayList<String> interests) {
+        this.interests = interests;
+    }
+
+    private ArrayList<String> interests;
+
+    public Company(String beacon_id, String name, ArrayList<JobOffer> jobOffers,ArrayList<String> interests) {
         this.beacon_id = beacon_id;
         this.name = name;
         this.jobOffers = jobOffers;
+        this.interests = interests;
     }
 
     public ArrayList<JobOffer> getJobOffers() {

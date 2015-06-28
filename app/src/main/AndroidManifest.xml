@@ -58,8 +58,12 @@
             android:label="@string/title_activity_company" >
         </activity>
         <activity
-                android:name=".OfferDetailActivity"
-                android:label="@string/title_activity_company" >
+            android:name=".OfferDetailActivity"
+            android:label="@string/title_activity_company" >
+        </activity>
+        <activity
+            android:name=".InterestedCompaniesActivity"
+            android:label="@string/title_activity_intereste_companies" >
         </activity>
     </application>
 

@@ -63,7 +63,7 @@ public class VisitorActivity extends ActionBarActivity {
             add(mSharedPreference.getString("ios_check",""));
             add(mSharedPreference.getString("android_check",""));
             add(mSharedPreference.getString("web_check",""));
-            add(mSharedPreference.getString("kittens_check",""));
+            add(mSharedPreference.getString("kitten_check",""));
         }};
 
 
@@ -74,7 +74,7 @@ public class VisitorActivity extends ActionBarActivity {
                 arraylist.add(new JobOffer("Kontakt", "Poet", new ArrayList<String>() {{add("ios");}}));
                 arraylist.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("android");add("ios");}}));
                 arraylist.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{
-                    add("kittens");
+                    add("kitten");
                 }}));
                 arraylist.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{
                     add("web");
@@ -83,7 +83,7 @@ public class VisitorActivity extends ActionBarActivity {
                 }}));
 
         ArrayList<JobOffer> arraylist2 = new ArrayList<>();
-            arraylist2.add(new JobOffer("Hub", "Poet", new ArrayList<String>() {{add("cats");}}));
+            arraylist2.add(new JobOffer("Hub", "Poet", new ArrayList<String>() {{add("kitten");}}));
             arraylist2.add(new JobOffer("DifferentName", "it", new ArrayList<String>() {{add("ios");}}));
             arraylist2.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("android");}}));
             arraylist2.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
@@ -94,15 +94,13 @@ public class VisitorActivity extends ActionBarActivity {
             arraylist3.add(new JobOffer("OneMore", "it", new ArrayList<String>() {{add("ios");add("cat");}}));
             arraylist3.add(new JobOffer("Name", "Poet", new ArrayList<String>() {{add("web");add("android");add("ios");}}));
 
-        final Company KontaktIO = new Company("9vVd","Kontakt.io", arraylist);
-        Company HubRaum = new Company("iTXT","HubRaum", arraylist2);
-        Company Google = new Company("IfZ4", "Google", arraylist3);
+        final Company KontaktIO = new Company("9vVd","Kontakt.io", arraylist,new ArrayList<String>() {{add("ios");add("kitten");}});
+        Company HubRaum = new Company("iTXT","HubRaum", arraylist2,new ArrayList<String>() {{add("web");add("android");}});
+        Company Google = new Company("IfZ4", "Google", arraylist3,new ArrayList<String>() {{add("web");add("ios");}});
 
         CompanyList.add(KontaktIO);
         CompanyList.add(HubRaum);
         CompanyList.add(Google);
-
-
 
 
         beaconManager = BeaconManager.newInstance(this);
@@ -298,4 +296,6 @@ public class VisitorActivity extends ActionBarActivity {
             throw new IllegalStateException(e);
         }
     }
+
+
 }
